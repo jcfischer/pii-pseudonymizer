@@ -309,4 +309,155 @@ describe("NERDetector", () => {
       }
     });
   });
+
+  // ===========================================================================
+  // Chunking for Long Inputs (Issue #1)
+  // ===========================================================================
+
+  describe("chunking for long inputs", () => {
+    it("should detect entities in text with >15 lines", async () => {
+      // Create a 20-line text with entities spread throughout
+      const lines = [
+        "Meeting Transcript - 2024-01-15",
+        "Attendees: John Smith, Angela Chen, Michael Johnson",
+        "",
+        "09:00 - John Smith: Let's start with the project update.",
+        "09:01 - Angela Chen: I've been working with Microsoft on the integration.",
+        "09:02 - Michael Johnson: The New York office has some concerns.",
+        "",
+        "09:05 - John Smith: What about the timeline?",
+        "09:06 - Angela Chen: Google replied last week about the API.",
+        "09:07 - Michael Johnson: I'll coordinate with the London team.",
+        "",
+        "09:10 - John Smith: Any blockers from Acme Corp?",
+        "09:11 - Angela Chen: No, they're based in San Francisco.",
+        "09:12 - Michael Johnson: Let me check with Sarah Williams.",
+        "",
+        "09:15 - John Smith: Sounds good.",
+        "09:16 - Angela Chen: I'll follow up with Amazon.",
+        "09:17 - Michael Johnson: The Berlin conference is next month.",
+        "",
+        "End of meeting",
+      ];
+      const text = lines.join("\n");
+
+      const entities = await detector.detect(text);
+
+      // Should detect multiple entities (names, orgs, locations)
+      expect(entities.length).toBeGreaterThan(0);
+
+      // Verify some expected entities are found
+      const persons = entities.filter(e => e.type === "PERSON");
+      const orgs = entities.filter(e => e.type === "ORG");
+      const locations = entities.filter(e => e.type === "LOCATION");
+
+      expect(persons.length).toBeGreaterThan(0);
+      expect(orgs.length).toBeGreaterThan(0);
+      expect(locations.length).toBeGreaterThan(0);
+    });
+
+    it("should have correct positions for entities in chunked text", async () => {
+      // Create a 25-line text to force chunking
+      const lines: string[] = [];
+      for (let i = 0; i < 25; i++) {
+        if (i % 3 === 0) {
+          lines.push(`Line ${i}: John Smith mentioned the update.`);
+        } else if (i % 3 === 1) {
+          lines.push(`Line ${i}: Angela Chen works at Microsoft.`);
+        } else {
+          lines.push(`Line ${i}: Meeting in New York next week.`);
+        }
+      }
+      const text = lines.join("\n");
+
+      const entities = await detector.detect(text);
+
+      // Verify that positions are correct
+      for (const entity of entities) {
+        const extractedText = text.substring(entity.start, entity.end);
+        // The extracted text should match the entity text (case-insensitive)
+        expect(extractedText.toLowerCase()).toBe(entity.text.toLowerCase());
+      }
+    });
+
+    it("should detect entities in 170-line meeting transcript", async () => {
+      // Simulate the reported issue scenario
+      const lines: string[] = [];
+      const speakers = ["John Smith", "Angela Chen", "Michael Johnson", "Sarah Williams"];
+      const companies = ["Microsoft", "Google", "Amazon", "Acme Corp"];
+      const locations = ["New York", "San Francisco", "London", "Berlin"];
+
+      for (let i = 0; i < 170; i++) {
+        const speaker = speakers[i % speakers.length];
+        const company = companies[i % companies.length];
+        const location = locations[i % locations.length];
+        const timestamp = `${String(Math.floor(i / 60)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`;
+
+        lines.push(`${timestamp} - ${speaker}: Working with ${company} team in ${location}.`);
+      }
+      const text = lines.join("\n");
+
+      const entities = await detector.detect(text);
+
+      // Should detect entities (previously returned 0 for this scenario)
+      expect(entities.length).toBeGreaterThan(0);
+
+      // Verify we found different types
+      const types = new Set(entities.map(e => e.type));
+      expect(types.size).toBeGreaterThan(1);
+    });
+
+    it("should handle chunk boundaries correctly", async () => {
+      // Create text where entities might span chunk boundaries
+      const lines: string[] = [];
+      for (let i = 0; i < 30; i++) {
+        lines.push(`This is line ${i} with John Smith`);
+      }
+      const text = lines.join("\n");
+
+      const entities = await detector.detect(text);
+
+      // All detected entities should have valid positions
+      for (const entity of entities) {
+        expect(entity.start).toBeGreaterThanOrEqual(0);
+        expect(entity.end).toBeGreaterThan(entity.start);
+        expect(entity.end).toBeLessThanOrEqual(text.length);
+      }
+    });
+
+    it("should maintain confidence scores across chunks", async () => {
+      // Create long text with clear entities
+      const lines: string[] = [];
+      for (let i = 0; i < 50; i++) {
+        lines.push(`Meeting ${i}: John Smith and Angela Chen discussed the project.`);
+      }
+      const text = lines.join("\n");
+
+      const entities = await detector.detect(text);
+
+      // All entities should have reasonable confidence scores
+      for (const entity of entities) {
+        expect(entity.confidence).toBeGreaterThan(0);
+        expect(entity.confidence).toBeLessThanOrEqual(1);
+      }
+    });
+
+    it("should process chunks in parallel efficiently", async () => {
+      // Create a large text to test parallel processing
+      const lines: string[] = [];
+      for (let i = 0; i < 100; i++) {
+        lines.push(`Line ${i}: Sarah Williams from Apple Inc in Seattle.`);
+      }
+      const text = lines.join("\n");
+
+      const startTime = Date.now();
+      const entities = await detector.detect(text);
+      const duration = Date.now() - startTime;
+
+      // Should complete in reasonable time (parallel processing)
+      // Note: This is a rough check - actual time depends on hardware
+      expect(entities.length).toBeGreaterThan(0);
+      expect(duration).toBeLessThan(30000); // Should complete in under 30 seconds
+    });
+  });
 });
