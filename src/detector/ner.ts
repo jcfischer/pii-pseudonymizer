@@ -170,25 +170,10 @@ export class NERDetector {
 
     try {
       // Run NER inference
-      const results = (await this.pipeline(text)) as NERToken[];
-
-      // Aggregate tokens into entities
-      const entities = this.aggregateTokens(results, text);
+      const entities = await this.runNERInference(text);
 
       // Apply filters
-      return entities.filter((entity) => {
-        // Filter by confidence
-        if (entity.confidence < minConfidence) {
-          return false;
-        }
-
-        // Filter by type if specified
-        if (requestedTypes && !requestedTypes.includes(entity.type)) {
-          return false;
-        }
-
-        return true;
-      });
+      return this.applyEntityFilters(entities, minConfidence, requestedTypes);
     } catch (error) {
       // Log error but don't crash - return empty results
       console.error(
@@ -226,10 +211,7 @@ export class NERDetector {
       chunks.map(async ({ text: chunkText, startOffset }) => {
         try {
           // Run NER inference on this chunk
-          const results = (await this.pipeline!(chunkText)) as NERToken[];
-
-          // Aggregate tokens into entities
-          const entities = this.aggregateTokens(results, chunkText);
+          const entities = await this.runNERInference(chunkText);
 
           // Adjust positions to account for chunk offset
           return entities.map((entity) => ({
@@ -250,7 +232,28 @@ export class NERDetector {
     const allEntities = chunkResults.flat();
 
     // Apply filters
-    return allEntities.filter((entity) => {
+    return this.applyEntityFilters(allEntities, minConfidence, requestedTypes);
+  }
+
+  /**
+   * Run NER inference and aggregate tokens into entities
+   * Extracted helper to avoid duplication between detect() and detectWithChunking()
+   */
+  private async runNERInference(text: string): Promise<DetectedEntity[]> {
+    const results = (await this.pipeline!(text)) as NERToken[];
+    return this.aggregateTokens(results, text);
+  }
+
+  /**
+   * Apply confidence and type filters to detected entities
+   * Extracted helper to avoid duplication between detect() and detectWithChunking()
+   */
+  private applyEntityFilters(
+    entities: DetectedEntity[],
+    minConfidence: number,
+    requestedTypes?: EntityType[]
+  ): DetectedEntity[] {
+    return entities.filter((entity) => {
       // Filter by confidence
       if (entity.confidence < minConfidence) {
         return false;
