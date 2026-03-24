@@ -1,0 +1,52 @@
+{
+  "name": "pii-pseudonymizer",
+  "version": "1.0.0",
+  "description": "Detect, pseudonymize, and restore personally identifiable information (PII) in text. Supports pattern-based detection (EMAIL, PHONE, URL, IP, DOMAIN) and NER-based detection (PERSON, ORG, LOCATION).",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jens-Christian Fischer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcfischer/pii-pseudonymizer.git"
+  },
+  "homepage": "https://github.com/jcfischer/pii-pseudonymizer",
+  "bugs": {
+    "url": "https://github.com/jcfischer/pii-pseudonymizer/issues"
+  },
+  "keywords": [
+    "pii",
+    "pseudonymization",
+    "anonymization",
+    "privacy",
+    "gdpr",
+    "ner",
+    "named-entity-recognition",
+    "data-protection"
+  ],
+  "main": "src/service/pii-service.ts",
+  "exports": {
+    ".": "./src/service/pii-service.ts",
+    "./service": "./src/service/pii-service.ts",
+    "./detector": "./src/detector/patterns.ts",
+    "./types": "./src/types.ts",
+    "./ai-wrapper": "./src/utils/ai-wrapper.ts"
+  },
+  "bin": {
+    "pii": "./pii"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --minify --outfile=pii",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@huggingface/transformers": "^3.8.1",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "names": [
+    {
+      "name": "ETH Zürich",
+      "type": "ORG",
+      "aliases": ["ETH", "ETHZ", "Eidgenössische Technische Hochschule Zürich", "École polytechnique fédérale de Zurich", "Swiss Federal Institute of Technology Zurich"]
+    },
+    {
+      "name": "EPFL",
+      "type": "ORG",
+      "aliases": ["École polytechnique fédérale de Lausanne", "Swiss Federal Institute of Technology Lausanne"]
+    },
+    {
+      "name": "Universität Basel",
+      "type": "ORG",
+      "aliases": ["University of Basel", "Université de Bâle", "Uni Basel"]
+    },
+    {
+      "name": "Universität Bern",
+      "type": "ORG",
+      "aliases": ["UniBE", "University of Bern", "Université de Berne", "Uni Bern"]
+    },
+    {
+      "name": "Universität Freiburg",
+      "type": "ORG",
+      "aliases": ["Unifr", "University of Fribourg", "Université de Fribourg", "Uni Freiburg", "Uni Fribourg"]
+    },
+    {
+      "name": "Universität Genf",
+      "type": "ORG",
+      "aliases": ["UNIGE", "University of Geneva", "Université de Genève", "Uni Genf"]
+    },
+    {
+      "name": "Universität Lausanne",
+      "type": "ORG",
+      "aliases": ["UNIL", "University of Lausanne", "Université de Lausanne", "Uni Lausanne"]
+    },
+    {
+      "name": "Universität Luzern",
+      "type": "ORG",
+      "aliases": ["Unilu", "University of Lucerne", "Université de Lucerne", "Uni Luzern"]
+    },
+    {
+      "name": "Universität Neuenburg",
+      "type": "ORG",
+      "aliases": ["UniNE", "University of Neuchâtel", "Université de Neuchâtel", "Uni Neuchâtel"]
+    },
+    {
+      "name": "Universität St. Gallen",
+      "type": "ORG",
+      "aliases": ["HSG", "University of St. Gallen", "Université de Saint-Gall", "Uni St. Gallen"]
+    },
+    {
+      "name": "Università della Svizzera italiana",
+      "type": "ORG",
+      "aliases": ["USI", "University of Italian Switzerland", "Universität der italienischen Schweiz", "Université de la Suisse italienne"]
+    },
+    {
+      "name": "Universität Zürich",
+      "type": "ORG",
+      "aliases": ["UZH", "University of Zurich", "Université de Zurich", "Uni Zürich", "Uni Zurich"]
+    },
+    {
+      "name": "Berner Fachhochschule",
+      "type": "ORG",
+      "aliases": ["BFH", "Bern University of Applied Sciences", "Haute école spécialisée bernoise"]
+    },
+    {
+      "name": "Fachhochschule Graubünden",
+      "type": "ORG",
+      "aliases": ["FHGR", "University of Applied Sciences of the Grisons", "Haute école des Grisons", "Scuola universitaria professionale dei Grigioni", "Scola auta spezialisada dal Grischun"]
+    },
+    {
+      "name": "Fachhochschule Nordwestschweiz",
+      "type": "ORG",
+      "aliases": ["FHNW", "University of Applied Sciences Northwestern Switzerland", "Haute école spécialisée de la Suisse du Nord-Ouest"]
+    },
+    {
+      "name": "HES-SO",
+      "type": "ORG",
+      "aliases": ["Haute école spécialisée de Suisse occidentale", "University of Applied Sciences and Arts Western Switzerland", "Fachhochschule Westschweiz"]
+    },
+    {
+      "name": "Hochschule Luzern",
+      "type": "ORG",
+      "aliases": ["HSLU", "Lucerne University of Applied Sciences and Arts", "Haute école de Lucerne"]
+    },
+    {
+      "name": "Kalaidos Fachhochschule",
+      "type": "ORG",
+      "aliases": ["Kalaidos FH", "Kalaidos University of Applied Sciences", "Haute école spécialisée Kalaidos"]
+    },
+    {
+      "name": "Ostschweizer Fachhochschule",
+      "type": "ORG",
+      "aliases": ["OST", "Eastern Switzerland University of Applied Sciences", "Haute école spécialisée de Suisse orientale"]
+    },
+    {
+      "name": "SUPSI",
+      "type": "ORG",
+      "aliases": ["Scuola universitaria professionale della Svizzera italiana", "University of Applied Sciences and Arts of Southern Switzerland", "Fachhochschule Südschweiz", "Haute école spécialisée de la Suisse italienne"]
+    },
+    {
+      "name": "Zürcher Fachhochschule",
+      "type": "ORG",
+      "aliases": ["ZFH", "Zurich University of Applied Sciences", "Haute école zurichoise"]
+    },
+    {
+      "name": "ZHAW",
+      "type": "ORG",
+      "aliases": ["Zürcher Hochschule für Angewandte Wissenschaften", "Zurich University of Applied Sciences", "Haute école zurichoise des sciences appliquées"]
+    },
+    {
+      "name": "ZHdK",
+      "type": "ORG",
+      "aliases": ["Zürcher Hochschule der Künste", "Zurich University of the Arts", "Haute école d'art de Zurich"]
+    },
+    {
+      "name": "EHB",
+      "type": "ORG",
+      "aliases": ["IFFP", "IUFFP", "Eidgenössisches Hochschulinstitut für Berufsbildung", "Institut fédéral des hautes études en formation professionnelle", "Swiss Federal University for Vocational Education and Training", "Istituto Universitario Federale per la Formazione Professionale"]
+    },
+    {
+      "name": "PHBern",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule Bern", "University of Teacher Education Bern", "Haute école pédagogique de Berne", "PH Bern"]
+    },
+    {
+      "name": "HEP-BEJUNE",
+      "type": "ORG",
+      "aliases": ["Haute école pédagogique BEJUNE", "University of Teacher Education BEJUNE"]
+    },
+    {
+      "name": "PH Freiburg",
+      "type": "ORG",
+      "aliases": ["HEP FR", "PH FR", "Pädagogische Hochschule Freiburg", "Haute école pédagogique Fribourg", "University of Teacher Education Fribourg"]
+    },
+    {
+      "name": "PHGR",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule Graubünden", "University of Teacher Education of the Grisons", "Haute école pédagogique des Grisons", "Alta scuola pedagogica dei Grigioni", "Scola auta da pedagogia dal Grischun", "PH Graubünden"]
+    },
+    {
+      "name": "PH Luzern",
+      "type": "ORG",
+      "aliases": ["PHLU", "Pädagogische Hochschule Luzern", "University of Teacher Education Lucerne", "Haute école pédagogique de Lucerne"]
+    },
+    {
+      "name": "PHSH",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule Schaffhausen", "University of Teacher Education Schaffhausen", "Haute école pédagogique de Schaffhouse", "PH Schaffhausen"]
+    },
+    {
+      "name": "PHSZ",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule Schwyz", "University of Teacher Education Schwyz", "Haute école pédagogique de Schwytz", "PH Schwyz"]
+    },
+    {
+      "name": "PHSG",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule St. Gallen", "St. Gallen University of Teacher Education", "Haute école pédagogique de Saint-Gall", "PH St. Gallen"]
+    },
+    {
+      "name": "PHTG",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule Thurgau", "Thurgau University of Teacher Education", "Haute école pédagogique de Thurgovie", "PH Thurgau"]
+    },
+    {
+      "name": "PH Wallis",
+      "type": "ORG",
+      "aliases": ["PH-VS", "HEP-VS", "Pädagogische Hochschule Wallis", "Haute école pédagogique du Valais", "University of Teacher Education Valais", "HEP Valais"]
+    },
+    {
+      "name": "HEP Vaud",
+      "type": "ORG",
+      "aliases": ["Haute école pédagogique du canton de Vaud", "University of Teacher Education Vaud"]
+    },
+    {
+      "name": "PH Zug",
+      "type": "ORG",
+      "aliases": ["PHZG", "Pädagogische Hochschule Zug", "University of Teacher Education Zug", "Haute école pédagogique de Zoug"]
+    },
+    {
+      "name": "PH Zürich",
+      "type": "ORG",
+      "aliases": ["PHZH", "Pädagogische Hochschule Zürich", "University of Teacher Education Zurich", "Haute école pédagogique de Zurich"]
+    },
+    {
+      "name": "PH FHNW",
+      "type": "ORG",
+      "aliases": ["Pädagogische Hochschule FHNW", "University of Teacher Education FHNW", "Haute école pédagogique FHNW"]
+    },
+    {
+      "name": "HfH",
+      "type": "ORG",
+      "aliases": ["Interkantonale Hochschule für Heilpädagogik", "University of Teacher Education in Special Needs", "Haute école intercantonale de pédagogie spécialisée"]
+    },
+    {
+      "name": "IUFE",
+      "type": "ORG",
+      "aliases": ["Institut universitaire de formation des enseignants", "University Institute for Teacher Education"]
+    },
+    {
+      "name": "SUPSI DFA",
+      "type": "ORG",
+      "aliases": ["Dipartimento formazione e apprendimento", "SUPSI Department of Education and Learning"]
+    }
+  ],
+  "caseSensitive": false,
+  "matchPartial": false
+}

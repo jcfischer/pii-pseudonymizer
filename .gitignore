@@ -1,0 +1,7 @@
+node_modules/
+bun.lock
+dist/
+*.db
+
+# Compiled binary
+pii
