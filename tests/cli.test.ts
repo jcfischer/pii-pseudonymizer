@@ -6,8 +6,11 @@ import { writeFileSync, unlinkSync, existsSync } from "fs";
 // CLI Integration Tests (TDD - RED Phase)
 // =============================================================================
 
-const CLI_PATH = "/Users/fischer/.claude/skills/pii/src/index.ts";
-const TEST_DIR = "/Users/fischer/.claude/skills/pii/tests";
+import { join, dirname } from "path";
+
+const PROJECT_ROOT = join(dirname(import.meta.dir));
+const CLI_PATH = join(PROJECT_ROOT, "src/index.ts");
+const TEST_DIR = join(PROJECT_ROOT, "tests");
 
 describe("PII CLI", () => {
   // ===========================================================================
