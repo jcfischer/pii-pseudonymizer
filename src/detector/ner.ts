@@ -69,6 +69,12 @@ export class NERDetector {
   private readonly modelName = "Xenova/bert-base-NER";
 
   /**
+   * Maximum number of lines per chunk for NER processing
+   * Long inputs (>15 lines) are automatically chunked to avoid silent failures
+   */
+  private readonly maxLinesPerChunk = 15;
+
+  /**
    * Check if the detector is initialized
    */
   isInitialized(): boolean {
@@ -156,6 +162,12 @@ export class NERDetector {
 
     const minConfidence = options.minConfidence ?? 0.7;
 
+    // Check if text needs chunking
+    const lineCount = text.split('\n').length;
+    if (lineCount > this.maxLinesPerChunk) {
+      return this.detectWithChunking(text, minConfidence, requestedTypes);
+    }
+
     try {
       // Run NER inference
       const results = (await this.pipeline(text)) as NERToken[];
@@ -184,6 +196,73 @@ export class NERDetector {
       );
       return [];
     }
+  }
+
+  /**
+   * Detect NER entities in long text using chunking strategy
+   * Splits text into manageable chunks and merges results
+   */
+  private async detectWithChunking(
+    text: string,
+    minConfidence: number,
+    requestedTypes?: EntityType[]
+  ): Promise<DetectedEntity[]> {
+    const lines = text.split('\n');
+    const chunks: Array<{ text: string; startOffset: number }> = [];
+
+    // Split into chunks of maxLinesPerChunk lines
+    for (let i = 0; i < lines.length; i += this.maxLinesPerChunk) {
+      const chunkLines = lines.slice(i, i + this.maxLinesPerChunk);
+      const chunkText = chunkLines.join('\n');
+
+      // Calculate character offset for this chunk
+      const startOffset = lines.slice(0, i).join('\n').length + (i > 0 ? 1 : 0);
+
+      chunks.push({ text: chunkText, startOffset });
+    }
+
+    // Process all chunks in parallel
+    const chunkResults = await Promise.all(
+      chunks.map(async ({ text: chunkText, startOffset }) => {
+        try {
+          // Run NER inference on this chunk
+          const results = (await this.pipeline!(chunkText)) as NERToken[];
+
+          // Aggregate tokens into entities
+          const entities = this.aggregateTokens(results, chunkText);
+
+          // Adjust positions to account for chunk offset
+          return entities.map((entity) => ({
+            ...entity,
+            start: entity.start + startOffset,
+            end: entity.end + startOffset,
+          }));
+        } catch (error) {
+          console.error(
+            `NER chunk detection error: ${error instanceof Error ? error.message : String(error)}`
+          );
+          return [];
+        }
+      })
+    );
+
+    // Merge all chunk results
+    const allEntities = chunkResults.flat();
+
+    // Apply filters
+    return allEntities.filter((entity) => {
+      // Filter by confidence
+      if (entity.confidence < minConfidence) {
+        return false;
+      }
+
+      // Filter by type if specified
+      if (requestedTypes && !requestedTypes.includes(entity.type)) {
+        return false;
+      }
+
+      return true;
+    });
   }
 
   /**
