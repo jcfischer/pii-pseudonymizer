@@ -1,0 +1,37 @@
+name: Pii
+version: 1.0.0
+type: skill
+tier: community
+
+author:
+  name: jcfischer
+  github: jcfischer
+
+provides:
+  skill:
+    - trigger: "anonymize"
+    - trigger: "pseudonymize"
+    - trigger: "PII"
+    - trigger: "personal data"
+  cli:
+    - command: "bun src/index.ts"
+      name: "pii"
+
+depends_on:
+  tools:
+    - name: bun
+      version: ">=1.0.0"
+
+capabilities:
+  filesystem:
+    read:
+      - "~/.config/pii-pseudonymizer/"
+    write:
+      - "~/.config/pii-pseudonymizer/"
+  network: []
+  bash:
+    allowed: true
+    restricted_to:
+      - "bun src/index.ts *"
+      - "pii *"
+  secrets: []
